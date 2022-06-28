@@ -6,13 +6,10 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Anime 3x3 Maker</h1>
+<h1>Kye's Anime 3x3 Maker</h1>
+<br />
 
-
-
-
-<div class="container-md">
-
+<div class="container">
     <div class="row">
         <div class="col">
             <label>Anime Name:</label>
@@ -38,8 +35,7 @@
             <br />
         </div>
 
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col"><button style="float:right;margin-right:10px" type="button" class="btn btn-danger" @onclick="ResetAll">Reset All</button></div>
 
     </div>
 </div>
@@ -66,47 +62,46 @@
 }
 
 
-@if (grid != null)
-{
-    <div class="container container-fluid">
-        @do
-        {
-            GridCounter = 0;
-        } while (false);
+<div class="container container-fluid">
+    <h4>Preview:</h4>
+    @do
+    {
+        GridCounter = 0;
+    } while (false);
 
-        @for (int i = 1; i <= Columns; i++)
-        {
+    @for (int i = 1; i <= Columns; i++)
+    {
 
-            <div class="row">
-                @for (int j = 1; j <= Rows; j++)
+        <div class="row">
+            @for (int j = 1; j <= Rows; j++)
+            {
+                var index = GridCounter;
+                string className = "";
+                @if (SelectedGrid == index)
                 {
-                    var index = GridCounter;
-                    string className = "";
-                    @if (SelectedGrid == index)
+                    className += "border border-primary";
+                }
+                <div @onclick="(() => SelectCol(index))" class="col-md-3">
+                    @do
                     {
-                        className += "border border-primary";
-                    }
-                    <div @onclick="(() => SelectCol(index))" class="col-md-3">
-                        @do
-                        {
-                            GridCounter++;
-                        } while (false);
+                        GridCounter++;
+                    } while (false);
 
-                        <div class="card @className">
-                            <img style="object-fit:cover;height:350px;width:auto" src="@grid[index].ImageURL" class="card-img-top" alt="...">
-                            <div class="card-footer bg-transparent border-secondary">
-                                <a href="@grid[index].OpenLinkURL" target="_blank" style="text-decoration:none;font-family: 'Roboto', sans-serif;">@grid[index].Name</a>
-                            </div>
+                    <div class="card @className">
+                        <img style="object-fit:cover;height:325px" src="@grid[index].ImageURL" class="card-img-top" alt="...">
+                        <div class="card-footer bg-transparent border-secondary">
+                            <a href="@grid[index].OpenLinkURL" target="_blank" style="text-decoration:none;font-family: 'Roboto', sans-serif;">@grid[index].Name</a>
                         </div>
                     </div>
+                </div>
 
 
-                }
-            </div>
-            <br />
-        }
-    </div>
-}
+            }
+        </div>
+        <br />
+    }
+</div>
+
 @code {
 
     private string? InputSearch { get; set; }
@@ -196,14 +191,26 @@
         InputSearch = string.Empty;
     }
 
-    protected override async Task OnInitializedAsync()
+    private async Task ResetAll()
+    {
+        grid = new();
+        await ClearSearch();
+        await InitGrid();
+        StateHasChanged();
+    }
+
+    private async Task InitGrid()
     {
         int listCount = Rows * Columns;//Define the size of our list
         for (int i = 0; i < listCount; i++)//Our list currently has 0 items so add a new grid item foreach grid.
         {
             grid.Add(new GridItem());
         }
+    }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await InitGrid();
         SearchPlaceholder = await API.MAL.MAL.GetRandomAnimeName();
     }
 }
