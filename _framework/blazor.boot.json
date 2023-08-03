@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "Anime3x3.dll": "sha256-V0dG3FqhZldP8EmPe5pUKDOnm+dMVOSbxJPibjVl630=",
+      "Anime3x3.dll": "sha256-18kwUxSI0sZu\/BpVgxcP7V1265EepAIjeDehCd2leVc=",
       "Microsoft.AspNetCore.Components.dll": "sha256-w+CMlkfuKAzEYaQUr4GkeV1mLiozGDsj70Ey30FicgI=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-PdYKNU3JFUSCwZkUC2EvjucmTjwE3xrGoa+SvpFmvWs=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-Og2FhYYygJ8y60fguXMO6CBtfINSbXS\/dR0H0vFheKw=",
