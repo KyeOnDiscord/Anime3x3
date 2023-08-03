@@ -27,7 +27,7 @@ namespace Anime3x3.API.MAL
                 sfwString = "&sfw=true";
             }
 
-            string? response = await Util.DownloadString(BaseURL + $"/anime?q={search}{TypesToQueryString(types)}{sfwString}&order_by=popularity&limit=1000");
+            string? response = await Util.DownloadString(BaseURL + $"/anime?q={search}{TypesToQueryString(types)}{sfwString}&order_by=popularity&limit=25");
             JsonSerializerSettings settings = new();
             settings.NullValueHandling = NullValueHandling.Ignore;
             if (response != null)
